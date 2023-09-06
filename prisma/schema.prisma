@@ -1,0 +1,49 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
+}
+
+generator pothos {
+  provider = "prisma-pothos-types"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl      = env("DIRECT_URL")
+  
+}
+
+model Organization {
+  id            String @id @default(cuid())
+  name          String @unique
+  users         User[]
+}
+
+enum Role {
+  ORG_USER
+  ORG_ADMIN
+  PLATFORM_ADMIN
+}
+
+model User {
+  id            String         @id @default(cuid())
+  email         String?        @unique
+  emailVerified DateTime?
+  image         String?
+  organizations Organization[]
+  role          Role           @default(ORG_USER)
+  profile       Profile?
+}
+
+model Profile {
+  id        String  @id @default(cuid())
+  lastName  String
+  firstName String
+  locale    String?
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String  @unique
+}
