@@ -2,9 +2,10 @@ import { ThemeProvider } from '@/components/theme-provider';
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import { ApolloProvider } from '@apollo/client';
-import apolloClient from '../lib/apollo';
+import { UserProvider } from '@auth0/nextjs-auth0/client';
+
 import { ApolloWrapper } from './AppWrapper';
+import { Toaster } from '@/components/ui/toaster';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -20,14 +21,17 @@ export default function RootLayout({
     return (
         <html lang='en'>
             <body className={inter.className}>
-                <ApolloWrapper>
-                    <ThemeProvider
-                        attribute='class'
-                        defaultTheme='system'
-                        enableSystem>
-                        {children}
-                    </ThemeProvider>
-                </ApolloWrapper>
+                <UserProvider>
+                    <ApolloWrapper>
+                        <ThemeProvider
+                            attribute='class'
+                            defaultTheme='system'
+                            enableSystem>
+                            {children}
+                            <Toaster />
+                        </ThemeProvider>
+                    </ApolloWrapper>
+                </UserProvider>
             </body>
         </html>
     );

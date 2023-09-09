@@ -5,7 +5,6 @@ CREATE TYPE "Role" AS ENUM ('ORG_USER', 'ORG_ADMIN', 'PLATFORM_ADMIN');
 CREATE TABLE "Organization" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "boxIdClientId" TEXT NOT NULL DEFAULT '',
 
     CONSTRAINT "Organization_pkey" PRIMARY KEY ("id")
 );

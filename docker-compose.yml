@@ -9,8 +9,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
       PGDATA: /data/postgres
     volumes:
-       - postgres:/data/postgres
-       - ./models/:/app/models
+       - ./db:/data/postgres
     ports:
       - "5432:5432"
     networks:
