@@ -20,6 +20,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { ReactNode } from 'react';
 import { Pencil, Trash } from 'lucide-react';
+import ConfirmModal from './Confirm';
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
@@ -55,22 +56,22 @@ export function DataTable<TData, TValue>({
                     {table.getHeaderGroups().map((headerGroup) => (
                         <TableRow key={headerGroup.id}>
                             <>
-                            {headerGroup.headers.map((header) => {
-                                return (
-                                    <TableHead key={header.id}>
-                                        {header.isPlaceholder
-                                            ? null
-                                            : flexRender(
-                                                  header.column.columnDef
-                                                      .header,
-                                                  header.getContext()
-                                              )}
-                                    </TableHead>
-                                );
-                            })}
+                                {headerGroup.headers.map((header) => {
+                                    return (
+                                        <TableHead key={header.id}>
+                                            {header.isPlaceholder
+                                                ? null
+                                                : flexRender(
+                                                      header.column.columnDef
+                                                          .header,
+                                                      header.getContext()
+                                                  )}
+                                        </TableHead>
+                                    );
+                                })}
                             </>
-                            <TableHead key="edit"/>
-                            <TableHead key="delete"/>
+                            <TableHead key='edit' />
+                            <TableHead key='delete' />
                         </TableRow>
                     ))}
                 </TableHeader>
@@ -101,14 +102,16 @@ export function DataTable<TData, TValue>({
                                     <TableCell
                                         key={`edit-${row.id}`}
                                         className='w-8'>
-                                        <Button variant='ghost'>
-                                            <Trash
-                                                size={18}
-                                                onClick={() =>
-                                                    handleOnDelete(row.id)
-                                                }
-                                            />
-                                        </Button>
+                                        <ConfirmModal
+                                            title='Delete Organization'
+                                            message='Are you sure you want to delete this organization?'
+                                            onConfirm={() =>
+                                                handleOnDelete(row.id)
+                                            }>
+                                            <Button variant='ghost'>
+                                                <Trash size={18} />
+                                            </Button>
+                                        </ConfirmModal>
                                     </TableCell>
                                 </>
                             </TableRow>

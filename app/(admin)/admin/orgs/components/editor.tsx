@@ -104,6 +104,7 @@ export function OrganizationEditor({ children, item }: Props) {
         }
         if (error) {
             toast({
+                variant: 'destructive',
                 description: `Something went wrong: ${error.message}`,
             });
         }

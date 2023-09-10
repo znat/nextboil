@@ -51,3 +51,19 @@ builder.mutationField('updateOrganization', (t) =>
             }),
     })
 );
+
+builder.mutationField('deleteOrganization', (t) =>
+    t.prismaField({
+        type: 'Organization',
+        args: {
+            id: t.arg.string({ required: true }),
+        },
+        resolve: async (query, _parent, { id }, _ctx, _info) =>
+            prisma.organization.delete({
+                where: {
+                    id,
+                },
+                ...query,
+            }),
+    })
+);
