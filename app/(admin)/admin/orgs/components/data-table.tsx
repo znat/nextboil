@@ -19,7 +19,7 @@ import {
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { ReactNode } from 'react';
-import { Trash } from 'lucide-react';
+import { Pencil, Trash } from 'lucide-react';
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
@@ -54,6 +54,7 @@ export function DataTable<TData, TValue>({
                 <TableHeader>
                     {table.getHeaderGroups().map((headerGroup) => (
                         <TableRow key={headerGroup.id}>
+                            <>
                             {headerGroup.headers.map((header) => {
                                 return (
                                     <TableHead key={header.id}>
@@ -67,6 +68,9 @@ export function DataTable<TData, TValue>({
                                     </TableHead>
                                 );
                             })}
+                            </>
+                            <TableHead key="edit"/>
+                            <TableHead key="delete"/>
                         </TableRow>
                     ))}
                 </TableHeader>
@@ -88,7 +92,11 @@ export function DataTable<TData, TValue>({
                                     <TableCell
                                         key={`edit-${row.id}`}
                                         className='w-8'>
-                                        <EditComponent item={row.original} />
+                                        <EditComponent item={row.original}>
+                                            <Button variant='ghost'>
+                                                <Pencil size={18} />
+                                            </Button>
+                                        </EditComponent>
                                     </TableCell>
                                     <TableCell
                                         key={`edit-${row.id}`}

@@ -7,9 +7,9 @@ import { DataTable } from './components/data-table';
 import { columns } from './components/columns';
 import { OrganizationEditor } from './components/editor';
 import { Button } from '@/components/ui/button';
-import { Plus } from 'lucide-react';
+import { Edit, Plus } from 'lucide-react';
 
-const AllOrganizationsQuery = gql`
+export const GET_ALL_ORGANIZATIONS = gql`
     query {
         organizations {
             id
@@ -23,7 +23,7 @@ interface Props {
 }
 
 const HelloWorld: React.FC<Props> = () => {
-    const { data, loading, error } = useQuery(AllOrganizationsQuery);
+    const { data, loading, error } = useQuery(GET_ALL_ORGANIZATIONS);
     const onEdit = (row: Organization) => {
         console.log('edit', row);
     };
@@ -36,10 +36,12 @@ const HelloWorld: React.FC<Props> = () => {
         <>
             <div className='container mx-auto py-10'>
                 <div className='flex justify-end mb-10'>
+                    <OrganizationEditor>
                     <Button>
                         <Plus className='mr-2 h-4 w-4' />
                         New
                     </Button>
+                    </OrganizationEditor>
                 </div>
                 <DataTable
                     columns={columns}

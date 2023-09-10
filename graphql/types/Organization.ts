@@ -16,21 +16,21 @@ builder.queryField('organizations', (t) =>
     })
 );
 
-// builder.mutationField('createOrganization', (t) =>
-//     t.prismaField({
-//         type: 'Organization',
-//         args: {
-//             name: t.arg.string({ required: true }),
-//         },
-//         resolve: (query, _parent, { name }, _ctx, _info) =>
-//             prisma.organization.create({
-//                 data: {
-//                     name,
-//                 },
-//                 ...query,
-//             }),
-//     })
-// );
+builder.mutationField('createOrganization', (t) =>
+    t.prismaField({
+        type: 'Organization',
+        args: {
+            name: t.arg.string({ required: true }),
+        },
+        resolve: (query, _parent, { name }, _ctx, _info) =>
+            prisma.organization.create({
+                data: {
+                    name,
+                },
+                ...query,
+            }),
+    })
+);
 
 builder.mutationField('updateOrganization', (t) =>
     t.prismaField({

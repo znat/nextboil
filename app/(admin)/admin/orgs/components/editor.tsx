@@ -27,7 +27,16 @@ import { gql, useMutation } from '@apollo/client';
 import { Organization } from '@prisma/client';
 import { useToast } from '@/components/ui/use-toast';
 import { useState } from 'react';
-import { Edit, Pencil } from 'lucide-react';
+import { GET_ALL_ORGANIZATIONS } from '../page';
+
+const CREATE_ORGANIZATION = gql`
+    mutation createOrganization($name: String!) {
+        createOrganization(name: $name) {
+            id
+            name
+        }
+    }
+`;
 
 const UPDATE_ORGANIZATION = gql`
     mutation updateOrganization($id: String!, $name: String!) {
@@ -45,46 +54,68 @@ const formSchema = z.object({
 });
 
 interface Props {
-    item: Organization;
+    item?: Organization;
+    children: React.ReactNode;
 }
 
-export function OrganizationEditor({ item }: Props) {
+export function OrganizationEditor({ children, item }: Props) {
     const { toast } = useToast();
     const [open, setOpen] = useState<boolean | undefined>(undefined);
-    const [updateOrganization, { data, loading, error }] =
-        useMutation(UPDATE_ORGANIZATION);
+    const [
+        createOrganization,
+        { data: createResult, loading: creating, error: errorCreating },
+    ] = useMutation(CREATE_ORGANIZATION, {
+        refetchQueries: [{ query: GET_ALL_ORGANIZATIONS }],
+    });
+    const [
+        updateOrganization,
+        { data: updateResult, loading: updating, error: errorUpdating },
+    ] = useMutation(UPDATE_ORGANIZATION);
+
+    const mutation = item ? updateOrganization : createOrganization;
+    const data = createResult || updateResult;
+    const loading = creating || updating;
+    const error = errorCreating || errorUpdating;
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            name: item.name,
+            name: item?.name,
         },
     });
 
-    const onSubmit = async (values: z.infer<typeof formSchema>) => {
-        const result = await updateOrganization({
-            variables: { id: item.id, name: values.name },
-        });
+    const title = item ? 'Edit organization' : 'Create an organization';
+    const description = item
+        ? "Make changes to the organization here. Click save when you're done."
+        : "Create a new organization here. Click save when you're done.";
+    const successMessage = item
+        ? 'Organization succesfully updated'
+        : 'Organization succesfully created';
 
-        toast({
-            description: 'Organization succesfully updated',
+    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+        const result = await mutation({
+            variables: item ? { id: item.id, ...values } : values,
         });
-        setOpen(false);
+        if (result.data) {
+            toast({
+                description: successMessage,
+            });
+            setOpen(false);
+        }
+        if (error) {
+            toast({
+                description: `Something went wrong: ${error.message}`,
+            });
+        }
     };
 
     return (
         <Sheet open={open} onOpenChange={setOpen}>
-            <SheetTrigger asChild ><Button variant='ghost'>
-                <Pencil size={18} />
-            </Button></SheetTrigger>
-
+            <SheetTrigger asChild>{children}</SheetTrigger>
             <SheetContent>
                 <SheetHeader>
-                    <SheetTitle>Edit organization</SheetTitle>
-                    <SheetDescription>
-                        Make changes to the organization here. Click save when
-                        you&apos;re done.
-                    </SheetDescription>
+                    <SheetTitle>{title}</SheetTitle>
+                    <SheetDescription>{description}</SheetDescription>
                 </SheetHeader>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)}>
