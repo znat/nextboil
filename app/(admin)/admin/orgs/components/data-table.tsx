@@ -26,6 +26,7 @@ interface DataTableProps<TData, TValue> {
     data: TData[];
     onEdit: (row: any) => void;
     onDelete: (row: any) => void;
+    displayString?: (obj: TData) => string;
     editComponent: (props: any) => ReactNode;
 }
 
@@ -34,6 +35,8 @@ export function DataTable<TData, TValue>({
     data,
     onEdit,
     onDelete,
+    displayString,
+
     editComponent: EditComponent,
 }: DataTableProps<TData, TValue>) {
     const table = useReactTable({
@@ -94,7 +97,11 @@ export function DataTable<TData, TValue>({
                                         key={`edit-${row.id}`}
                                         className='w-8'>
                                         <EditComponent item={row.original}>
-                                            <Button variant='ghost'>
+                                            <Button
+                                                variant='ghost'
+                                                aria-label={`Edit ${displayString?.(
+                                                    row.original
+                                                )}.`}>
                                                 <Pencil size={18} />
                                             </Button>
                                         </EditComponent>
@@ -103,12 +110,20 @@ export function DataTable<TData, TValue>({
                                         key={`edit-${row.id}`}
                                         className='w-8'>
                                         <ConfirmModal
-                                            title='Delete Organization'
-                                            message='Are you sure you want to delete this organization?'
+                                            title={`Delete ${displayString?.(
+                                                row.original
+                                            )}`}
+                                            message={`Are you sure you want to delete ${displayString?.(
+                                                row.original
+                                            )}?`}
                                             onConfirm={() =>
                                                 handleOnDelete(row.id)
                                             }>
-                                            <Button variant='ghost'>
+                                            <Button
+                                                variant='ghost'
+                                                aria-label={`Delete ${displayString?.(
+                                                    row.original
+                                                )}`}>
                                                 <Trash size={18} />
                                             </Button>
                                         </ConfirmModal>

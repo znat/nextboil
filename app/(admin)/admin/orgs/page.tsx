@@ -77,6 +77,7 @@ const HelloWorld: React.FC<Props> = () => {
                     editComponent={OrganizationEditor}
                     onEdit={onEdit}
                     onDelete={onDelete}
+                    displayString={(o: Organization) => o.name}
                 />
             </div>
         </>
