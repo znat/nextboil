@@ -73,10 +73,11 @@ export function OrganizationEditor({ item }: Props) {
     };
 
     return (
-        <Sheet open={open} onOpenChange={setOpen}>
-            <SheetTrigger asChild ><Button variant='ghost'>
+        <Sheet >
+            <SheetTrigger asChild ><Button variant='ghost' onClick={() => setOpen(true)}>
                 <Pencil size={18} />
             </Button></SheetTrigger>
+            
 
             <SheetContent>
                 <SheetHeader>
