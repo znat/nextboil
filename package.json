@@ -10,6 +10,11 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "eslint ."
+    }
+  },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
@@ -19,6 +24,7 @@
     "@auth0/nextjs-auth0": "^3.1.0",
     "@hookform/resolvers": "^3.3.1",
     "@pothos/core": "^3.33.1",
+    "@pothos/plugin-errors": "^3.11.1",
     "@pothos/plugin-prisma": "^3.59.0",
     "@prisma/client": "^5.2.0",
     "@radix-ui/react-accordion": "^1.1.2",
@@ -58,8 +64,6 @@
     "clsx": "^2.0.0",
     "cmdk": "^0.2.0",
     "date-fns": "^2.30.0",
-    "eslint": "8.48.0",
-    "eslint-config-next": "13.4.19",
     "graphql": "^16.8.0",
     "graphql-yoga": "^4.0.4",
     "lucide-react": "^0.276.0",
@@ -81,6 +85,9 @@
     "zod": "^3.22.2"
   },
   "devDependencies": {
-    "@playwright/test": "^1.37.1"
+    "@playwright/test": "^1.37.1",
+    "husky": "^8.0.3",
+    "eslint": "8.48.0",
+    "eslint-config-next": "13.4.19"
   }
 }

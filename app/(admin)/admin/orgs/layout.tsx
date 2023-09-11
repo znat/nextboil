@@ -1,7 +1,4 @@
 import React from 'react';
-import { MainNav } from './components/main-nav';
-import { UserNav } from '@/components/navbar/user-nav';
-import { ModeToggle } from '@/components/mode-toggle';
 
 const title = 'Nested Layouts';
 

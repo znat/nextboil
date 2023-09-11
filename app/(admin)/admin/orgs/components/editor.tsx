@@ -32,8 +32,16 @@ import { GET_ALL_ORGANIZATIONS } from '../page';
 const CREATE_ORGANIZATION = gql`
     mutation createOrganization($name: String!) {
         createOrganization(name: $name) {
-            id
-            name
+            __typename
+            ... on Error {
+                message
+            }
+            ... on MutationCreateOrganizationSuccess {
+                data {
+                    id
+                    name
+                }
+            }
         }
     }
 `;
@@ -96,17 +104,21 @@ export function OrganizationEditor({ children, item }: Props) {
         const result = await mutation({
             variables: item ? { id: item.id, ...values } : values,
         });
-        if (result.data) {
+        const data = item
+            ? result.data.updateOrganization
+            : result.data.createOrganization;
+        console.log(data);
+        if (data.__typename === 'Error') {
+            toast({
+                variant: 'destructive',
+                title: 'Error',
+                description: `${data.message}`,
+            });
+        } else {
             toast({
                 description: successMessage,
             });
             setOpen(false);
-        }
-        if (error) {
-            toast({
-                variant: 'destructive',
-                description: `Something went wrong: ${error.message}`,
-            });
         }
     };
 

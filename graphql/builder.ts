@@ -1,24 +1,28 @@
-// graphql/builder.ts
-
-// 1.
 import SchemaBuilder from '@pothos/core';
 import PrismaPlugin from '@pothos/plugin-prisma';
+import ErrorPlugin from '@pothos/plugin-errors';
 import type PrismaTypes from '@pothos/plugin-prisma/generated';
 import prisma from '../lib/prisma';
 
-// 2.
 export const builder = new SchemaBuilder<{
-    // 3.
     PrismaTypes: PrismaTypes;
 }>({
-    // 4.
-    plugins: [PrismaPlugin],
+    plugins: [PrismaPlugin, ErrorPlugin],
+    errorOptions: {
+        defaultTypes: [],
+    },
     prisma: {
         client: prisma,
     },
 });
 
-// 5.
+builder.objectType(Error, {
+    name: 'Error',
+    fields: (t) => ({
+        message: t.exposeString('message'),
+    }),
+});
+
 builder.queryType({
     description: 'The query root of Pothos GraphQL API.',
     fields: (t) => ({
