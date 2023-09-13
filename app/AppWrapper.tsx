@@ -10,10 +10,10 @@ import {
 } from '@apollo/experimental-nextjs-app-support/ssr';
 
 const uri = () => {
-    if (process.env.VERCEL_ENV === 'preview') {
-        return `https://${process.env.VERCEL_BRANCH_URL}/api/graphql`;
+    if (process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview') {
+        return `https://${process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL}/api/graphql`;
     } else if (process.env.VERCEL_ENV === 'production') {
-        return `https://${process.env.VERCEL_URL}/api/graphql`;
+        return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/graphql`;
     } else {
         return 'http://localhost:3000/api/graphql';
     }
