@@ -6,7 +6,8 @@
     "dev": "next dev --turbo",
     "prismag": "prisma generate",
     "prismam": "prisma migrate dev",
-    "build": "prisma generate && prisma migrate deploy next build",
+    "build": "next build",
+    "vercel-build": "prisma generate && prisma migrate deploy && next build",
     "start": "next start",
     "lint": "next lint"
   },
