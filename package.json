@@ -7,9 +7,9 @@
     "prismag": "prisma generate",
     "prismam": "prisma migrate dev",
     "build": "next build",
-    "vercel-build": "prisma generate && prisma migrate deploy && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "prisma generate"
   },
   "husky": {
     "hooks": {
