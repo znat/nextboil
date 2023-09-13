@@ -9,7 +9,7 @@ import {
   SSRMultipartLink,
 } from "@apollo/experimental-nextjs-app-support/ssr";
 
-const uri = process.env.VERCEL_URL? `https://${process.env.VERCEL_URL}/api/graphql` : "http://localhost:3000/api/graphql";
+const uri = process.env.NEXT_PUBLIC_VERCEL_URL? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/graphql` : "http://localhost:3000/api/graphql";
 // have a function to create a client for you
 function makeClient() {
   const httpLink = new HttpLink({
