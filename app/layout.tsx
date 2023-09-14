@@ -2,7 +2,7 @@ import { ThemeProvider } from '@/components/theme-provider';
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import { UserProvider } from '@auth0/nextjs-auth0/client';
+// import { UserProvider } from '@auth0/nextjs-auth0/client';
 
 import { ApolloWrapper } from './AppWrapper';
 import { Toaster } from '@/components/ui/toaster';
@@ -21,7 +21,7 @@ export default function RootLayout({
     return (
         <html lang='en'>
             <body className={inter.className}>
-                <UserProvider>
+                {/* <UserProvider> */}
                     <ApolloWrapper>
                         <ThemeProvider
                             attribute='class'
@@ -31,7 +31,7 @@ export default function RootLayout({
                             <Toaster />
                         </ThemeProvider>
                     </ApolloWrapper>
-                </UserProvider>
+                {/* </UserProvider> */}
             </body>
         </html>
     );

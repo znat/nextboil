@@ -21,7 +21,6 @@
   "dependencies": {
     "@apollo/client": "^3.8.3",
     "@apollo/experimental-nextjs-app-support": "^0.4.2",
-    "@auth0/nextjs-auth0": "^3.1.0",
     "@hookform/resolvers": "^3.3.1",
     "@pothos/core": "^3.33.1",
     "@pothos/plugin-errors": "^3.11.1",
