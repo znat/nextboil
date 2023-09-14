@@ -1,6 +1,5 @@
-import { Organization } from '@prisma/client';
 import { builder } from '../builder';
-import { ca } from 'date-fns/locale';
+import prisma from '../../lib/prisma';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 builder.prismaObject('Organization', {
