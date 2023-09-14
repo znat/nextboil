@@ -6,6 +6,8 @@
     "dev": "next dev",
     "prismag": "prisma generate",
     "prismam": "prisma migrate dev",
+    "supastart": "npx supabase start",
+    "supastop": "npx supabase stop",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -88,6 +90,7 @@
     "@playwright/test": "^1.37.1",
     "eslint": "8.48.0",
     "eslint-config-next": "13.4.19",
-    "husky": "^8.0.3"
+    "husky": "^8.0.3",
+    "supabase": "^1.93.0"
   }
 }
