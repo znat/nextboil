@@ -8,7 +8,8 @@
     "prismam": "prisma migrate dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "prisma generate"
   },
   "husky": {
     "hooks": {
@@ -21,12 +22,11 @@
   "dependencies": {
     "@apollo/client": "^3.8.3",
     "@apollo/experimental-nextjs-app-support": "^0.4.2",
-    "@auth0/nextjs-auth0": "^3.1.0",
     "@hookform/resolvers": "^3.3.1",
     "@pothos/core": "^3.33.1",
     "@pothos/plugin-errors": "^3.11.1",
     "@pothos/plugin-prisma": "^3.59.0",
-    "@prisma/client": "^5.2.0",
+    "@prisma/client": "^5.3.0",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-alert-dialog": "^1.0.4",
     "@radix-ui/react-aspect-ratio": "^1.0.3",
@@ -70,7 +70,7 @@
     "next": "13.4.19",
     "next-themes": "^0.2.1",
     "postcss": "8.4.29",
-    "prisma": "^5.2.0",
+    "prisma": "^5.3.0",
     "react": "18.2.0",
     "react-day-picker": "^8.8.1",
     "react-dom": "18.2.0",
@@ -86,8 +86,8 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.37.1",
-    "husky": "^8.0.3",
     "eslint": "8.48.0",
-    "eslint-config-next": "13.4.19"
+    "eslint-config-next": "13.4.19",
+    "husky": "^8.0.3"
   }
 }
