@@ -21,7 +21,7 @@ builder.queryField('organizations', (t) =>
                 if (error instanceof PrismaClientKnownRequestError) {
                     throw new Error(error.message);
                 } else {
-                    throw new Error('Unknown error');
+                    throw new Error((error as {message: string}).message);
                 }
             }
         },
