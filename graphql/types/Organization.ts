@@ -14,8 +14,17 @@ builder.prismaObject('Organization', {
 builder.queryField('organizations', (t) =>
     t.prismaField({
         type: ['Organization'],
-        resolve: (query, _parent, _args, _ctx, _info) =>
-            prisma.organization.findMany({ ...query }),
+        resolve: (query, _parent, _args, _ctx, _info) => {
+            try {
+                return prisma.organization.findMany({ ...query });
+            } catch (error) {
+                if (error instanceof PrismaClientKnownRequestError) {
+                    throw new Error(error.message);
+                } else {
+                    throw new Error('Unknown error');
+                }
+            }
+        },
     })
 );
 
@@ -29,7 +38,6 @@ builder.mutationField('createOrganization', (t) =>
             name: t.arg.string({ required: true }),
         },
         resolve: async (query, _parent, { name }, _ctx, _info) => {
-            
             try {
                 const organization = await prisma.organization.create({
                     data: {
@@ -37,7 +45,7 @@ builder.mutationField('createOrganization', (t) =>
                     },
                     ...query,
                 });
-                return organization
+                return organization;
             } catch (error) {
                 if (error instanceof PrismaClientKnownRequestError) {
                     if (error.code === 'P2002') {
